@@ -21,7 +21,9 @@ abstract class AbstractCommand extends \Symfony\Component\Console\Command\Comman
         $areaCode = Area::AREA_ADMINHTML;
         /** @var \Magento\Framework\App\State $appState */
         $appState = $this->objectManager->get('Magento\Framework\App\State');
-        $appState->setAreaCode($areaCode);
+        if (!$appState->getAreaCode()) {
+            $appState->setAreaCode($areaCode);
+        }
         /** @var \Magento\Framework\ObjectManager\ConfigLoaderInterface $configLoader */
         $configLoader = $this->objectManager->get('Magento\Framework\ObjectManager\ConfigLoaderInterface');
         $this->objectManager->configure($configLoader->load($areaCode));
